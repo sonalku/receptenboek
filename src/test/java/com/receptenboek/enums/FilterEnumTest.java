@@ -10,11 +10,10 @@ class FilterEnumTest {
 
 	@Test
 	void testGetterAndFromName() throws Exception {
-		var time = "time";
+
 		var title = "title";
 		var other = "other";
 
-		assertTrue(FilterEnum.fromName(time).isPresent());
 		assertTrue(FilterEnum.fromName(title).isPresent());
 		assertTrue(FilterEnum.fromName(other).isEmpty());
 
