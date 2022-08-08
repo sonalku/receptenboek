@@ -48,7 +48,7 @@ public class Validations {
 	 *
 	 * @param id the id
 	 * @return the validations
-	 * @throws ReceptenboekException the cookbook exception
+	 * @throws ReceptenboekException the Recipebook exception
 	 */
 	public void optionalId(Optional<String> id) throws ReceptenboekException {
 		if (id.isPresent()) {
@@ -62,7 +62,7 @@ public class Validations {
 	 * @param field   the field
 	 * @param strings the strings
 	 * @return the validations
-	 * @throws ReceptenboekException the cookbook exception
+	 * @throws ReceptenboekException the Recipebook exception
 	 */
 	public void listStrings(String field, List<String> strings) throws ReceptenboekException {
 		for (String s : strings) {
@@ -116,7 +116,7 @@ public class Validations {
 	 *
 	 * @param ingredient the ingredient
 	 * @return the validations
-	 * @throws ReceptenboekException the cookbook exception
+	 * @throws ReceptenboekException the Recipebook exception
 	 */
 	public void ingredient(IngredientDTO ingredient) throws ReceptenboekException {
 		string("ingredient name", ingredient.getName());

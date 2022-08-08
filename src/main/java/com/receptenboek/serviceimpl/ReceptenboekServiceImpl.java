@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReceptenboekServiceImpl implements ReceptenboekService, Mappers, UUIDGenerator {
 
 	@Autowired
-	private ReceptenboekRepository cookbookRepository;
+	private ReceptenboekRepository receptenboekRepository;
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
@@ -56,14 +56,14 @@ public class ReceptenboekServiceImpl implements ReceptenboekService, Mappers, UU
 	@Override
 	public Optional<List<Recipe>> findAll(String userId) throws ReceptenboekException {
 		log.info("--> RecipeServiceImpl findAll userId: {}", userId);
-		return Optional.ofNullable(cookbookRepository.all(userId));
+		return Optional.ofNullable(receptenboekRepository.all(userId));
 	}
 
 	/** {@inherithDoc} */
 	@Override
 	public Optional<Recipe> findById(String userId, String id) throws ReceptenboekException {
 		log.info("--> RecipeServiceImpl  findById userId: {}, id: {}", userId, id);
-		return cookbookRepository.byId(userId, id);
+		return receptenboekRepository.byId(userId, id);
 	}
 
 	/** {@inherithDoc} */
@@ -71,7 +71,7 @@ public class ReceptenboekServiceImpl implements ReceptenboekService, Mappers, UU
 	public Optional<List<Recipe>> findByIngredients(String userId, List<String> ingredientsNames)
 			throws ReceptenboekException {
 		log.info("--> RecipeServiceImpl  findByIngredients userId: {}, ingredients: {}", userId, ingredientsNames);
-		return Optional.ofNullable(cookbookRepository.byIngredients(userId, ingredientsNames.stream()
+		return Optional.ofNullable(receptenboekRepository.byIngredients(userId, ingredientsNames.stream()
 				.map(name -> Pattern.compile(name, Pattern.CASE_INSENSITIVE)).collect(Collectors.toList())));
 	}
 
@@ -87,7 +87,7 @@ public class ReceptenboekServiceImpl implements ReceptenboekService, Mappers, UU
 
 		log.debug("--> RecipeServiceImpl createRecipe generated UUID: {}", recipeToInsert.getId());
 
-		return Optional.ofNullable(cookbookRepository.save(recipeToInsert));
+		return Optional.ofNullable(receptenboekRepository.save(recipeToInsert));
 	}
 
 	/** {@inherithDoc} */
@@ -95,7 +95,7 @@ public class ReceptenboekServiceImpl implements ReceptenboekService, Mappers, UU
 	public Optional<Recipe> updateRecipe(String userId, String id, RecipeDTO recipe) throws ReceptenboekException {
 		log.info("--> RecipeServiceImpl updateRecipe userId: {}, id: {}, recipe: {}", userId, id, recipe);
 
-		var oRecipeSaved = cookbookRepository.byId(userId, id);
+		var oRecipeSaved = receptenboekRepository.byId(userId, id);
 
 		if (oRecipeSaved.isEmpty()) {
 			throw new ReceptenboekException(HttpStatus.NOT_FOUND, "The id is not valid");
@@ -107,20 +107,20 @@ public class ReceptenboekServiceImpl implements ReceptenboekService, Mappers, UU
 		recipeToSave.setId(oldRecipe.getId());
 		recipeToSave.setUserId(oldRecipe.getUserId());
 
-		return Optional.ofNullable(cookbookRepository.save(recipeToSave));
+		return Optional.ofNullable(receptenboekRepository.save(recipeToSave));
 	}
 
 	/** {@inherithDoc} */
 	@Override
 	public void deleteRecipe(String userId, String id) throws ReceptenboekException {
 		log.info("--> RecipeServiceImpl deleteRecipe: {} userId: {}, id: {}", userId, id);
-		var oRecipeSaved = cookbookRepository.byId(userId, id);
+		var oRecipeSaved = receptenboekRepository.byId(userId, id);
 
 		if (oRecipeSaved.isEmpty()) {
 			throw new ReceptenboekException(HttpStatus.NOT_FOUND, "The id is not valid");
 		}
 
-		cookbookRepository.deleteById(oRecipeSaved.get().getId());
+		receptenboekRepository.deleteById(oRecipeSaved.get().getId());
 
 	}
 

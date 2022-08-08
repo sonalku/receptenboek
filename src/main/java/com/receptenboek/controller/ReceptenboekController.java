@@ -68,7 +68,7 @@ public class ReceptenboekController {
 	@GetMapping("all")
 	public ResponseEntity<List<Recipe>> all(@RequestHeader(name = "userID", required = false) String userId)
 			throws ReceptenboekException {
-		log.debug("--> Cookbook Controller - GET - /recipes/all userID: {}", userId);
+		log.debug("--> Recipebook Controller - GET - /recipes/all userID: {}", userId);
 		return service.findAll(userId).map(ResponseEntity::ok).orElse(ResponseEntity.noContent().build());
 	}
 
@@ -86,7 +86,7 @@ public class ReceptenboekController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Recipe> byId(@RequestHeader(name = "userID", required = false) final String userId,
 			@PathVariable(name = "id", required = true) final String id) throws ReceptenboekException {
-		log.debug("--> Cookbook Controller - GET - /recipes/{} userId: {}", id, userId);
+		log.debug("--> Recipebook Controller - GET - /recipes/{} userId: {}", id, userId);
 		validations.id(id);
 		return service.findById(userId, id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
@@ -102,7 +102,7 @@ public class ReceptenboekController {
 	@GetMapping("search/ingredients")
 	public ResponseEntity<List<Recipe>> byIngredients(@RequestHeader(name = "userID", required = false) String userId,
 			@RequestParam(name = "names", required = true) List<String> names) throws ReceptenboekException {
-		log.debug("--> Cookbook Controller - GET - /recipes/ingredients?names={} - userID: {}", names, userId);
+		log.debug("--> Recipebook Controller - GET - /recipes/ingredients?names={} - userID: {}", names, userId);
 		validations.listStrings("names", names);
 		return service.findByIngredients(userId, names).map(ResponseEntity::ok)
 				.orElse(ResponseEntity.noContent().build());
@@ -123,7 +123,7 @@ public class ReceptenboekController {
 	public ResponseEntity<List<Recipe>> byFiltersCriteria(
 			@RequestHeader(name = "userID", required = false) String userId,
 			@RequestBody FiltersDTO searchFilters) throws ReceptenboekException {
-		log.debug("--> Cookbook Controller - GET - /recipes/search/{}/{}  - userID: {}", searchFilters, userId);
+		log.debug("--> Recipebook Controller - GET - /recipes/search/{}/{}  - userID: {}", searchFilters, userId);
 		validations.filterInstruction(searchFilters);
 		
 		return service.findByFilterIntructions(searchFilters);
@@ -135,7 +135,7 @@ public class ReceptenboekController {
 			@ApiResponse(code = 401, message = "Unauthorized") })
 	@GetMapping("filters")
 	public ResponseEntity<List<Map<String, String>>> filters() {
-		log.debug("--> Cookbook Controller - GET - /recipes/filters");
+		log.debug("--> Recipebook Controller - GET - /recipes/filters");
 		return ResponseEntity.ok(FilterEnum.toBeSended());
 	}
 
@@ -150,7 +150,7 @@ public class ReceptenboekController {
 	@PostMapping("/")
 	public ResponseEntity<Recipe> createRecipe(@RequestHeader(name = "userID", required = false) String userId,
 			@RequestBody RecipeDTO recipe) throws ReceptenboekException {
-		log.debug("--> Cookbook Controller - POST - /recipes/ - recipe: {}, userId: {}", recipe, userId);
+		log.debug("--> Recipebook Controller - POST - /recipes/ - recipe: {}, userId: {}", recipe, userId);
 		validations.recipe(recipe);
 		return service.createRecipe(userId, recipe).map(body -> ResponseEntity.status(HttpStatus.CREATED).body(body))
 				.orElse(ResponseEntity.status(HttpStatus.FORBIDDEN).build());
@@ -170,7 +170,7 @@ public class ReceptenboekController {
 	public ResponseEntity<Recipe> updateRecipe(@RequestHeader(name = "userID", required = false) String userId,
 			@PathVariable(name = "id", required = true) String id, @RequestBody RecipeDTO recipe)
 			throws ReceptenboekException {
-		log.debug("--> Cookbook Controller - PUT - recipes/{}  - recipe:{} userID: {}", id, recipe, userId);
+		log.debug("--> Recipebook Controller - PUT - recipes/{}  - recipe:{} userID: {}", id, recipe, userId);
 		validations.id(id);
 		validations.recipe(recipe);
 		return service.updateRecipe(userId, id, recipe).map(body -> ResponseEntity.accepted().body(body))
@@ -187,7 +187,7 @@ public class ReceptenboekController {
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> deleteRecipe(@RequestHeader(name = "userID", required = false) String userId,
 			@PathVariable(name = "id", required = true) String id) throws ReceptenboekException {
-		log.debug("--> Cookbook Controller - DELETE - /recipes/{}  - userID: {}", id, userId);
+		log.debug("--> Recipebook Controller - DELETE - /recipes/{}  - userID: {}", id, userId);
 		validations.id(id);
 		service.deleteRecipe(userId, id);
 		return ResponseEntity.accepted().build();

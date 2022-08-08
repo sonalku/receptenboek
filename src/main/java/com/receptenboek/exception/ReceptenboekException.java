@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Cook book Exception
+ * Recipe book Exception
  *
  * @author Sonal Kumbhare
  * @version 1.0.0
@@ -70,7 +70,7 @@ public class ReceptenboekException extends Exception {
 	 * @apiNote Save all data for the error and can be converted into JSON with
 	 *          method {@code toString()}
 	 */
-	@ApiModel(value = "Cookbook Error", description = "Object that return when error ocurred")
+	@ApiModel(value = "Recipebook Error", description = "Object that return when error ocurred")
 	public class JSONServiceError implements Serializable {
 
 		/** The Constant serialVersionUID. */
