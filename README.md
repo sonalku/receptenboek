@@ -3,7 +3,7 @@
 
 ## Implementation
 
-1. Application is developed in Spring Boot with Java 8 on Spring Tool Suite IDE. Database used is mongodb database.
+1. Application is developed in Spring Boot with Java 8 on Spring Tool Suite IDE. Database used is embedded mongodb database.
 
 2. You can add/delete/modify/search recipes using given criteria using the application.
 
@@ -11,7 +11,9 @@
 
 5. Exception Handling is done using ExceptionInterceptor. 
 
-6. JUnit/Integration test implemented. 
+6. JUnit/Integration test implemented.
+
+7. Sample Data populated
 
 
 ## Setting up the data
