@@ -83,14 +83,16 @@ value : {any given value}
 
 4. GET "/recipes/all' - API to get all recipes
 
-5. GET "/recipes/filters" - Api to get all allowed filters
+5. GET "/recipes/allByPage' - API to get all recipes
 
-6. GET "/recipes/search/ingredients" - Api to search recipe based on ingredients
+6. GET "/recipes/filters" - Api to get all allowed filters
+
+7. GET "/recipes/search/ingredients" - Api to search recipe based on ingredients
 
 
 ## Future scope
 
-1. Pagination and Sorting is not yet implemented due to time constraint
+1. Sorting is not yet implemented due to time constraint
 
 2. Integration teting done for Controller but need to work more to utilized embeded mongo correctly
 

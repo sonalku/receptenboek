@@ -1,6 +1,7 @@
 package com.receptenboek.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -89,5 +90,14 @@ public interface ReceptenboekService {
 	 * @throws ReceptenboekException
 	 */
 	public void deleteRecipe(String userId, String id) throws ReceptenboekException;
+
+	/**
+	 * Find By Page
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
+	public Optional<Map<String, Object>> findAll(String pageNumber, String pageSize);
 
 }

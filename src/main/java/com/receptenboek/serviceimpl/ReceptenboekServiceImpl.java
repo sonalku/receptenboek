@@ -1,11 +1,17 @@
 package com.receptenboek.serviceimpl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -59,6 +65,22 @@ public class ReceptenboekServiceImpl implements ReceptenboekService, Mappers, UU
 		return Optional.ofNullable(receptenboekRepository.all(userId));
 	}
 
+
+	@Override
+	public Optional<Map<String, Object>> findAll(String pageNumber, String pageSize) {
+		List<RecipeDTO> tutorials = new ArrayList<RecipeDTO>();
+	    Pageable paging = PageRequest.of(Integer.valueOf(pageNumber), Integer.valueOf(pageSize));
+
+	    Page<Recipe> pages = receptenboekRepository.findAll(paging);
+	    Map<String, Object> response = new HashMap<>();
+	      response.put("tutorials", pages.getContent());
+	      response.put("currentPage", pages.getNumber());
+	      response.put("totalItems", pages.getTotalElements());
+	      response.put("totalPages", pages.getTotalPages());
+	      response.put("lastPage", pages.isLast());
+	      return Optional.ofNullable(response);
+	}
+	
 	/** {@inherithDoc} */
 	@Override
 	public Optional<Recipe> findById(String userId, String id) throws ReceptenboekException {

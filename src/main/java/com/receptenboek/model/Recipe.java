@@ -41,7 +41,7 @@ public class Recipe {
 	private String id;
 
 	@ApiModelProperty(dataType = "string", example = "Fries Eggs", position = 1, value = "The title for the recipe")
-	@Indexed(unique=true, background = true)
+	//@Indexed(unique=true, background = true)
 	private String title;
 
 	@ApiModelProperty(position = 2, value = "The List of ingredients")

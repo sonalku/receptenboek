@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,6 +20,9 @@ public interface ReceptenboekRepository extends MongoRepository<Recipe, String> 
 
 	@Query("{ userId: ?0 }")
 	public List<Recipe> all(String userid);
+	
+	//@Query("{ userId: ?0 }")
+	Page<Recipe> findAll(Pageable pageable);
 
 	@Query("{ userId: ?0, _id: ?1 }")
 	public Optional<Recipe> byId(String userID, String id);

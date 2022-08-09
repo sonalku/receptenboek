@@ -59,7 +59,7 @@ public class ReceptenboekController {
 	 * @return the response entity
 	 * @throws ReceptenboekException the error service
 	 */
-	@ApiOperation(value = "Get all Recipes for user in token", responseContainer = "List", httpMethod = "GET", notes = "Get all Recipes that the user in the token is owner")
+	@ApiOperation(value = "Get all Recipes for user ", responseContainer = "List", httpMethod = "GET", notes = "Get all Recipes that the user in the token is owner")
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "userID", value = "Username for the user in token. The value autofill.", required = false, type = "string", readOnly = true, paramType = "Header") })
 	@ApiResponses(value = {
@@ -72,6 +72,28 @@ public class ReceptenboekController {
 		return service.findAll(userId).map(ResponseEntity::ok).orElse(ResponseEntity.noContent().build());
 	}
 
+	/**
+	 * All.
+	 *
+	 * @param userId the user id
+	 * @return the response entity
+	 * @throws ReceptenboekException the error service
+	 */
+	@ApiOperation(value = "Get all Recipes for user by Page and Page Number", responseContainer = "List", httpMethod = "GET", notes = "Get all Recipes that the user in the token is owner")
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "userID", value = "Username for the user in token. The value autofill.", required = false, type = "string", readOnly = true, paramType = "Header") })
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, response = Recipe.class, responseContainer = "List", message = "OK"),
+			@ApiResponse(code = 204, message = "No Content"), @ApiResponse(code = 401, message = "Unauthorized") })
+	@GetMapping("allByPage")
+	public ResponseEntity<Map<String, Object>> allByPage(@RequestHeader(name = "userID", required = false) String userId,
+			@RequestParam(name = "pageNumber", required = true) final String pageNumber,
+			@RequestParam(name = "pageSize", required = true) final String pageSize)
+			throws ReceptenboekException {
+		log.debug("--> Recipebook Controller - GET - /recipes/all userID: {}", userId);
+		return service.findAll(pageNumber,pageSize).map(ResponseEntity::ok).orElse(ResponseEntity.noContent().build());
+	}
+	
 	/**
 	 * By id.
 	 *
