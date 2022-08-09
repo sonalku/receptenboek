@@ -38,6 +38,7 @@
         "servings":4
 }
 
+
 2. Search recipes using POST "/recipes/search/" api 
 
 specify : criteria [INCLUDE/EXCLUDE]
