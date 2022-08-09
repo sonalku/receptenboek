@@ -14,8 +14,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +29,6 @@ import org.springframework.data.mongodb.core.index.TextIndexDefinition;
 import org.springframework.data.mongodb.core.index.TextIndexDefinition.TextIndexDefinitionBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -42,7 +37,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.receptenboek.dto.FiltersDTO;
@@ -69,7 +63,6 @@ import de.flapdoodle.embed.process.runtime.Network;
 @AutoConfigureMockMvc
 @AutoConfigureDataMongo
 @EnableAutoConfiguration(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
-@TestPropertySource(properties = { "spring.mongodb.embedded.version=4.0.21" })
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class ReceptenboekControllerTest implements Mappers {
@@ -87,8 +80,7 @@ class ReceptenboekControllerTest implements Mappers {
 	@Autowired
 	private ReceptenboekController controller;
 
-	ObjectMapper objectMapper = new ObjectMapper();
-	ObjectWriter objectWriter = objectMapper.writer();
+	private ObjectMapper objectMapper = new ObjectMapper();
 
 	/*************************************************/
 	private static MongodExecutable mongodExe;
@@ -96,6 +88,7 @@ class ReceptenboekControllerTest implements Mappers {
 	private static MongoClient mongo;
 	private static MongoTemplate mongoTemplate;
 	/*************************************************/
+	
 	@BeforeAll
 	public static void beforeEach() throws Exception {
 		MongodStarter starter = MongodStarter.getDefaultInstance();
@@ -113,16 +106,6 @@ class ReceptenboekControllerTest implements Mappers {
 
 	}
 
-	// @Bean
-	public MongoTemplate mongoTemplate() throws Exception {
-		MongoTemplate mongoTemplate = new MongoTemplate(mongo, "receptenboek");
-		TextIndexDefinition index = new TextIndexDefinitionBuilder().onField("instructions", 1f).onField("servings", 1f)
-				.build();
-		mongoTemplate.indexOps(Recipe.class).ensureIndex(index);
-
-		return mongoTemplate;
-	}
-
 	@AfterAll
 	public static void afterEach() throws Exception {
 		if (mongod != null) {
@@ -136,7 +119,6 @@ class ReceptenboekControllerTest implements Mappers {
 	public void setupBeforeEachTest() {
 
 		System.out.println("Before each");
-		//mongoTemplate.getDb().drop();
 
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
@@ -158,11 +140,6 @@ class ReceptenboekControllerTest implements Mappers {
 		recipe.setInstructions(instructions);
 		recipe.setIngredients(ingredients);
 	}
-
-	/*
-	 * @AfterAll public void tearDown(@Autowired MongoTemplate mongoTemplate) {
-	 * mongoTemplate.getDb().drop(); }
-	 */
 
 	@Test
 	void testIdOk() throws Exception {
@@ -242,13 +219,5 @@ class ReceptenboekControllerTest implements Mappers {
 
 		assertThat(result.getResponse().getContentAsString().contains("Veg Maratha"));
 	}
-
-	/*@AfterAll
-    public static void afterEach() throws Exception {
-        if (mongod != null) {
-            mongod.stop();
-            mongodExe.stop();
-            mongoTemplate.getDb().drop();
-        }*/
     
 }
