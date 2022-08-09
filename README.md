@@ -38,7 +38,7 @@
         "servings":4
 }
 
-2. Search recipes using Get "/recipes/search/" api 
+2. Search recipes using POST "/recipes/search/" api 
 
 specify : criteria [INCLUDE/EXCLUDE]
 filter : availble filetrs [TITLE, INGRDIENT, INSTRUCTION, SERVINGS, CATEGORY[VEG/NONVEG]]
@@ -83,6 +83,8 @@ value : {any given value}
 5. GET "/recipes/filters" - Api to get all allowed filters
 
 6. GET "/recipes/search/ingredients" - Api to search recipe based on ingredients
+
+7. POST "/recipes/search/" - Api to search recipe based on filters
 
 ## Future scope
 
