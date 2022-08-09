@@ -14,14 +14,19 @@ import com.receptenboek.enums.Category;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Recipe Class
  * @author Sonal Kumbhare
- * @version 1.0.0
+ * @version 1.0.0	
  */
-
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "Recipe for response , include de ID", value = "Recipe Response")
@@ -57,70 +62,4 @@ public class Recipe {
 	
 	@ApiModelProperty(dataType = "String", example = "2", value = "Number of person the recipe sufficient for", required = true)
 	private String servings;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public List<Ingredient> getIngredients() {
-		return ingredients;
-	}
-
-	public void setIngredients(List<Ingredient> ingredients) {
-		this.ingredients = ingredients;
-	}
-
-	public List<String> getInstructions() {
-		return instructions;
-	}
-
-	public void setInstructions(List<String> instructions) {
-		this.instructions = instructions;
-	}
-
-	public double getTime() {
-		return time;
-	}
-
-	public void setTime(double time) {
-		this.time = time;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public String getServings() {
-		return servings;
-	}
-
-	public void setServings(String servings) {
-		this.servings = servings;
-	}
-	
-	
 }

@@ -3,7 +3,10 @@ package com.receptenboek.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Ingredient Class
@@ -11,6 +14,9 @@ import lombok.NoArgsConstructor;
  * @version 1.0.0
  *
  */
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "Ingredient", value = "Ingredient Response")
@@ -32,6 +38,5 @@ public class Ingredient {
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-	
-	
+
 }
