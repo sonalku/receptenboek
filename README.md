@@ -38,7 +38,12 @@
         "servings":4
 }
 
-2. Search recipes using Get "/recipes/search/" api
+2. Search recipes using Get "/recipes/search/" api 
+
+specify : criteria [INCLUDE/EXCLUDE]
+filter : availble filetrs [TITLE, INGRDIENT, INSTRUCTION, SERVINGS, CATEGORY[VEG/NONVEG]]
+value : {any given value}
+
 {
   "searchFilters": [
     {
@@ -52,9 +57,14 @@
       "value": "4"
     },
     {
-      "criteria": "INCLUDE",
+      "criteria": "EXCLUDE",
       "filter": "INGREDIENTS",
       "value": "Panner"
+    },
+    {
+      "criteria": "EXCLUDE",
+      "filter": "CATEGORY",
+      "value": "NONVEG"
     }
   ]
 }
