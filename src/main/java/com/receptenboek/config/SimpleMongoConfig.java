@@ -1,7 +1,9 @@
 package com.receptenboek.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.TextIndexDefinition;
 import org.springframework.data.mongodb.core.index.TextIndexDefinition.TextIndexDefinitionBuilder;
@@ -20,9 +22,18 @@ import com.receptenboek.model.Recipe;
 @Configuration
 public class SimpleMongoConfig {
 
+	@Value("${spring.data.mongodb.port}")
+	private String port;
+	
+	@Value("${spring.data.mongodb.database}")
+	private String database;
+	
 	@Bean
 	public MongoClient mongo() {
-		ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/receptenboek");
+		StringBuilder builder = new StringBuilder();
+		builder.append("mongodb://localhost:").append(port).append("/").append(database);
+		System.out.println("Connection : =>"+builder.toString());
+		ConnectionString connectionString = new ConnectionString(builder.toString());
 		MongoClientSettings mongoClientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
 				.build();
 
