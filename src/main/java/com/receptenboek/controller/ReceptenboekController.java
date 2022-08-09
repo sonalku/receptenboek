@@ -107,23 +107,20 @@ public class ReceptenboekController {
 		return service.findByIngredients(userId, names).map(ResponseEntity::ok)
 				.orElse(ResponseEntity.noContent().build());
 	}
-
-	@ApiOperation(value = "Search a Recipe by a filter", httpMethod = "GET", notes = "Get all Recipes that matches with filter and value for this filter")
+	
+	@ApiOperation(value = "Search a Recipe by a filter", httpMethod = "POST", notes = "Get all Recipes that matches with filter and value for this filter")
 	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "userID", value = "Username for the user in token. The value autofill.", required = false, type = "string", readOnly = true, paramType = "Header"),
-			@ApiImplicitParam(name = "filter", value = "The type of filter", required = true, type = "string", allowableValues = "TIME, TITLE", readOnly = true),
-			@ApiImplicitParam(name = "value", value = "the value for filter", required = true, type = "string", readOnly = true),
-			@ApiImplicitParam(name = "criteria", value = "the criteria for filter", required = true, type = "string",allowableValues = "INCLUDE, EXCLUDE", readOnly = true)})
+			@ApiImplicitParam(name = "userID", value = "Username for the user in token. The value autofill.", required = false, type = "string", readOnly = true, paramType = "Header")	 })
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, response = Recipe.class, responseContainer = "List", message = "OK"),
+			@ApiResponse(code = 200, response = Recipe.class, message = "OK"),
 			@ApiResponse(code = 204, message = "No Content"), @ApiResponse(code = 401, message = "Unauthorized"),
 			@ApiResponse(code = 400, message = "Bad Request", response = ReceptenboekException.JSONServiceError.class),
 			@ApiResponse(code = 404, message = "Not Found") })
-	@GetMapping("search/")
+	@PostMapping("/search/")
 	public ResponseEntity<List<Recipe>> byFiltersCriteria(
 			@RequestHeader(name = "userID", required = false) String userId,
 			@RequestBody FiltersDTO searchFilters) throws ReceptenboekException {
-		log.debug("--> Recipebook Controller - GET - /recipes/search/{}/{}  - userID: {}", searchFilters, userId);
+		log.debug("--> Recipebook Controller - POST - /recipes/search/{}/{}  - userID: {}", searchFilters, userId);
 		validations.filterInstruction(searchFilters);
 		
 		return service.findByFilterIntructions(searchFilters);
