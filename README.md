@@ -20,7 +20,7 @@
 
 ## Recipes Book
 
-1. Use the Post /recipes/ api to add recipes.
+1. Use the POST /recipes/ api to add recipes.
 {
     "ingredients":[
         {
@@ -84,7 +84,6 @@ value : {any given value}
 
 6. GET "/recipes/search/ingredients" - Api to search recipe based on ingredients
 
-7. POST "/recipes/search/" - Api to search recipe based on filters
 
 ## Future scope
 
