@@ -38,7 +38,7 @@
         "servings":4
 }
 
-2. Search recipes using Get "/recipes/search/" api 
+2. Search recipes using Get "/recipes/search/" api [Swagger Not working(##GET method can not have body##) - Test with Postman]
 
 specify : criteria [INCLUDE/EXCLUDE]
 filter : availble filetrs [TITLE, INGRDIENT, INSTRUCTION, SERVINGS, CATEGORY[VEG/NONVEG]]
